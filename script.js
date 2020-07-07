@@ -21,23 +21,36 @@ var questions = [
         answer: "script src="
     },
     {
+        title: "Math.random() returns ____.",
+        choices: ["a number between 1 and 100", "a number between 0 and 9", "a number between 1 and 9", "a number between 0 and 1"],
+        answer: "a number between 0 and 1"
+    },
+    {
         title: "What is the main purpose of a Javascript file in web-development?",
         choices: ["Programs the behavior of the web page", "Specifies the layout of the web page", "Defines the content of a web page", "Specifies the color and margins of a page"],
         answer: "Programs the behavior of the web page"
     },
-
 ];
 
 // Declare variables for the quiz
 var score = 0;
 var questionIndex = 0;
+
+// Create new element for application 
 var ulCreate = document.createElement("ul");
+
 var wrapper = document.querySelector("#wrapper");
 var currentTime = document.querySelector("#currentTime");
 var questionsForQuiz = document.querySelector("#questionsForQuiz");
 var timerStart = document.querySelector("#timerStart");
+
+// Sets and holds interval time for application
 var holdInterval = 0;
+
+// Set seconds left to 15 seconds per question 
 var secondsLeft = 76;
+
+// Sets and holds penalty time if question is incorrect
 var penalty = 10;
 
 
@@ -82,7 +95,7 @@ function render(questionIndex) {
 
 
 
-// Create event to compare choices 
+// Create event to compare choices with the correct answer 
 function compare(event) {
     var element = event.target;
 
@@ -128,7 +141,7 @@ function finishUp() {
 
     questionsForQuiz.appendChild(createP);
 
-    // Calculates remaining time
+    // Calculate time remaining on quiz and replace it with the users score 
     if (secondsLeft >= 0) {
         var timeRemaining = secondsLeft;
         var createP2 = document.createElement("p");
@@ -138,6 +151,11 @@ function finishUp() {
         questionsForQuiz.appendChild(createP2);
     }
 
+    var createLabel = document.createElement("label");
+    createLabel.setAttribute("id", "createLabel");
+    createLabel.textContent = "Enter your initials: ";
+
+    questionsForQuiz.appendChild(createLabel);
 
     var createInput = document.createElement("input");
     createInput.setAttribute("type", "text");
@@ -146,11 +164,7 @@ function finishUp() {
 
     questionsForQuiz.appendChild(createInput);
 
-    var createLabel = document.createElement("label");
-    createLabel.setAttribute("id", "createLabel");
-    createLabel.textContent = "Enter your initials: ";
-
-    questionsForQuiz.appendChild(createLabel);
+    
 
     var createSubmitBtn = document.createElement("button");
     createSubmitBtn.setAttribute("type", "submit");
@@ -161,6 +175,7 @@ function finishUp() {
 
     // Use event listener to store initials/score in local storage
     createSubmitBtn.addEventListener("click", function () {
+        
         var initials = createInput.value;
 
         if (initials === null) {
@@ -173,15 +188,17 @@ function finishUp() {
                 score: timeRemaining
             }
             console.log(finalScore);
-            var totalScores = localStorage.getItem("totalScores");
-            if (totalScores === null) {
-                totalScores = [];
+            var allScores = localStorage.getItem("allScores");
+            if (allScores === null) {
+                allScores = [];
             } else {
-                totalScores = JSON.parse(totalScores);
+                allScores = JSON.parse(allScores);
             }
-            totalScores.push(finalScore);
-            localStorage.setItem("totalScores", newScore);
-            var newScore = JSON.stringify(totalScores);
+            allScores.push(finalScore);
+            localStorage.setItem("allScores", newScore);
+            var newScore = JSON.stringify(allScores);
+            
+            
             window.location.replace("./highscore.html");
         }
     });
