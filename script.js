@@ -35,7 +35,7 @@ var ulCreate = document.createElement("ul");
 var wrapper = document.querySelector("#wrapper");
 var currentTime = document.querySelector("#currentTime");
 var questionsForQuiz = document.querySelector("#questionsForQuiz");
-var timer = document.querySelector("#timerStart");
+var timerStart = document.querySelector("#timerStart");
 var holdInterval = 0;
 var secondsLeft = 76;
 var penalty = 10;
@@ -43,7 +43,7 @@ var penalty = 10;
 
 
 // Triggers timer for quiz
-timer.addEventListener("click", function () {
+timerStart.addEventListener("click", function () {
     if (holdInterval === 0) {
         holdInterval = setInterval(function () {
             secondsLeft--;
@@ -72,7 +72,7 @@ function render(questionIndex) {
         questionsForQuiz.textContent = userQuestion;
     }
     userChoices.forEach(function (newItem) {
-        var listItem = document.createElement("li");
+        var listItem = document.createElement("listItem");
         listItem.textContent = newItem;
         questionsForQuiz.appendChild(ulCreate);
         ulCreate.appendChild(listItem);
@@ -86,7 +86,7 @@ function render(questionIndex) {
 function compare(event) {
     var element = event.target;
 
-    if (element.matches("li")) {
+    if (element.matches("listItem")) {
 
         var createDiv = document.createElement("div");
         createDiv.setAttribute("id", "createDiv");
@@ -100,7 +100,6 @@ function compare(event) {
 
     }
 
-    // Determines which question the user starts on
     questionIndex++;
 
     if (questionIndex >= questions.length) {
@@ -153,20 +152,20 @@ function finishUp() {
 
     questionsForQuiz.appendChild(createLabel);
 
-    var createSubmit = document.createElement("button");
-    createSubmit.setAttribute("type", "submit");
-    createSubmit.setAttribute("id", "Submit");
-    createSubmit.textContent = "Submit";
+    var createSubmitBtn = document.createElement("button");
+    createSubmitBtn.setAttribute("type", "submit");
+    createSubmitBtn.setAttribute("id", "Submit");
+    createSubmitBtn.textContent = "Submit";
 
-    questionsForQuiz.appendChild(createSubmit);
+    questionsForQuiz.appendChild(createSubmitBtn);
 
     // Use event listener to store initials/score in local storage
-    createSubmit.addEventListener("click", function () {
+    createSubmitBtn.addEventListener("click", function () {
         var initials = createInput.value;
 
         if (initials === null) {
 
-            console.log("No initials entered!");
+            console.log("No initials entered");
 
         } else {
             var finalScore = {
