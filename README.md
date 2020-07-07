@@ -8,4 +8,6 @@ Added comments throughout the javascript code to show my thought process while c
 
 
 link to deployed site: https://danglayers.github.io/CodeQuizHW--REDO/
+
+
 link to github page: https://github.com/danglayers/CodeQuizHW--REDO
